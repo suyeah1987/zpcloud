@@ -23,3 +23,8 @@ $ packer build -var "disk_size=61440" -var "password=$password" windows-2012-R2-
 
 *NOTE*: Password strength requirements are pretty harsh
 http://technet.microsoft.com/en-us/library/cc786468%28v=ws.10%29.aspx
+
+
+
+#edit by zp
+packer build -var 'headless=false' windows2016.json
