@@ -1,0 +1,71 @@
+{
+  "_comment": "Build with `packer build windows.json`",
+  "builders": [
+    {
+      "type": "qemu",
+      "disk_size": "{{ user `disk_size` }}",
+
+      "floppy_files": "{{ user `floppy_files_list` }}",
+
+      "headless": "{{ user `headless` }}",
+      "http_directory": "http",
+      "iso_checksum": "f721aac69f8e1ee7e0593776c4809b5c",
+      "iso_checksum_type": "md5",
+      "iso_urls":
+        "http://10.100.189.39/image/iso/cn_windows_server_2012_r2_with_update_x64_dvd_4048415.iso",
+      "output_directory": "output-{{ user `vm_name` }}",
+      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+
+      "communicator": "winrm",
+      "winrm_username": "vagrant",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "10000s",
+
+      "qemuargs": [
+        [ "-m", "4048M" ],
+        [ "-cpu", "Westmere" ]
+      ],
+      "boot_wait": "2s",
+      "vm_name": "{{ user `vm_name` }}",
+      "qemuargs": [
+        [ "-m", "{{ user `memory` }}" ],
+        [ "-smp", "cpus={{ user `cpus`}}"]
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "windows-shell",
+      "scripts": [
+        "scripts/unlimited-password-expiration.bat",
+        "scripts/enable-rdp.bat",
+        "scripts/uac-disable.bat",
+        "scripts/disablewinupdate.bat",
+        "scripts/disable-hibernate.bat",
+        "scripts/firewall-open-ping.bat",
+        "scripts/firewall-open-rdp.bat"
+      ]
+    },
+
+    {
+      "type": "windows-shell",
+      "inline": ["net user vagrant {{ user `password`}}"]
+    }
+  ],
+
+  "variables": {
+    "disk_size": "65536",
+    "cpus" : "2",
+    "memory" : "2048",
+    "headless": "true",
+    "iso_checksum_type": "md5",
+    "iso_checksum": "f721aac69f8e1ee7e0593776c4809b5c",
+    "autounattend": "./answer_files/2012_r2/Autounattend.xml",
+    "iso_url": "http://10.100.189.39/image/iso/cn_windows_server_2012_r2_with_update_x64_dvd_4048415.iso",
+    "preseed" : "windows-2012-R2-standard/*",
+    "vagrantfile_template" : "vagrantfile-windows-2012-R2-standard.template",
+    "version" : "1",
+    "vm_name": "windows-2012",
+    "floppy_files_list" : "floppy/drivers/virtio-win-0.1.117/viostor/2k12R2/amd64/*,floppy/drivers/virtio-win-0.1.117/NetKVM/2k12R2/amd64/*,floppy/common/*,floppy/windows-2012i-R2-standard/*"
+  }
+}
