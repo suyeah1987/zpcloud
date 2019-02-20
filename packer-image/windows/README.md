@@ -26,5 +26,9 @@ http://technet.microsoft.com/en-us/library/cc786468%28v=ws.10%29.aspx
 
 
 
-#edit by zp
-packer build -var 'headless=false' windows2016.json
+### edit by zp
+```bash
+$ packer build -var 'headless=false' windows2016.json
+```
+
+
