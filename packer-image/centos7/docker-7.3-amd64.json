@@ -10,7 +10,7 @@
         "disk_size": "10000",
         "headless": "true",
         "upgrade": "no",
-        "iso_url": "http://download.tcwyun.com/iso/CentOS-7-x86_64-DVD-1611.iso", 
+        "iso_url": "http://download.xxx.com/iso/CentOS-7-x86_64-DVD-1611.iso", 
         "iso_checksum": "871d931b7d71cf5ecededb03c76583de",
         "pressed": "7.3.ks"
     },
